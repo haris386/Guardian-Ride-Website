@@ -1,5 +1,10 @@
+import ChildsSafety from "@/components/ChildsSafety";
+import Committed from "@/components/Committed";
 import CompleteTransportation from "@/components/CompleteTransportation";
+import DriveSafely from "@/components/DriveSafely";
+import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
+import HowItWorks from "@/components/HowItWorks";
 import Navbar from "@/components/Navbar";
 import StayConnected from "@/components/StayConnected";
 import Image from "next/image";
@@ -11,6 +16,11 @@ export default function Home() {
       <HeroSection />
       <CompleteTransportation />
       <StayConnected />
+      <DriveSafely />
+      <HowItWorks />
+      <Committed />
+      <ChildsSafety />
+      <Footer />
     </main>
   );
 }
