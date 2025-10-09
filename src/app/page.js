@@ -70,14 +70,15 @@ export default function Home() {
       {loading && <Loader onComplete={handleComplete} />}
 
       {/* Floating Framer-Style Cursor */}
-      <div
-        ref={cursorRingRef}
-        className="pointer-events-none fixed top-0 left-0 w-12 h-12 rounded-full border border-black/50 z-[9998] transform"
-      />
-      <div
-        ref={cursorRef}
-        className="pointer-events-none fixed top-0 left-0 w-2 h-2 rounded-full bg-black/70 z-[9999] transform -translate-x-1/2 -translate-y-1/2"
-      />
+<div
+  ref={cursorRingRef}
+  className="hidden md:block pointer-events-none fixed top-0 left-0 w-12 h-12 rounded-full border border-black/50 z-[9998] transform"
+/>
+<div
+  ref={cursorRef}
+  className="hidden md:block pointer-events-none fixed top-0 left-0 w-2 h-2 rounded-full bg-black/70 z-[9999] transform -translate-x-1/2 -translate-y-1/2"
+/>
+
 
       {/* Page content */}
       <div
