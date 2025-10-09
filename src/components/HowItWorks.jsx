@@ -26,13 +26,11 @@ export default function HowItWorks() {
       {/* Original Section (Desktop + Mobile) */}
       <section className="hidden sm:block w-full mx-auto relative rounded-[25px] bg-[#24211D] overflow-hidden px-6 py-16">
         {/* Right-side spiral image */}
-        <div className="absolute top-0 right-0 h-full">
-          <Image
+ <div className="absolute top-0 right-0">
+          <img
             src="/images/right-side-spiral.png"
             alt="Spiral"
-            width={300}
-            height={500}
-            className="object-contain h-full opacity-40"
+            className="object-contain" style={{width: "555px", height:"730px"}}
           />
         </div>
 
