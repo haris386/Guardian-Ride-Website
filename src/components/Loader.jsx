@@ -7,7 +7,9 @@ export default function Loader({ onComplete }) {
   const logoRef = useRef(null);
 
   useEffect(() => {
-    // GSAP progress simulation
+    const mm = gsap.matchMedia();
+
+    // Progress simulation
     gsap.to({}, {
       duration: 3,
       onUpdate: function () {
@@ -16,7 +18,7 @@ export default function Loader({ onComplete }) {
       },
     });
 
-    // Custom animation timeline
+    // Timeline for the animation
     const tl = gsap.timeline({
       delay: 2.5,
       onComplete: () => {
@@ -29,22 +31,35 @@ export default function Loader({ onComplete }) {
       },
     });
 
-    // Animate logo manually using your values
-    tl.to(logoRef.current, {
-      duration: 1.4,
-      x: -636.002, // 👈 corresponds to translateX(-636.002px)
-      y: -312.794, // 👈 corresponds to translateY(-312.794px)
-      fontSize: "30px",
-      fontWeight: 500, // 👈 new style added
-      ease: "power3.inOut",
-    });
+    // Different animations for mobile and desktop
+    mm.add(
+      {
+        // Mobile
+        isMobile: "(max-width: 768px)",
+        // Desktop
+        isDesktop: "(min-width: 769px)",
+      },
+      (context) => {
+        const { isMobile } = context.conditions;
 
-    // Fade out after reaching top
-    tl.to(logoRef.current, {
-      duration: 0.6,
-      opacity: 0,
-      ease: "power1.out",
-    });
+        tl.to(logoRef.current, {
+          duration: 1.4,
+          x: isMobile ? -136.002 : -636.002,
+          y: isMobile ? -612.794 : -312.794,
+          fontSize: "30px",
+          fontWeight: 500,
+          ease: "power3.inOut",
+        });
+
+        tl.to(logoRef.current, {
+          duration: 0.6,
+          opacity: 0,
+          ease: "power1.out",
+        });
+      }
+    );
+
+    return () => mm.revert(); // Cleanup on unmount
   }, [onComplete]);
 
   return (
@@ -58,7 +73,7 @@ export default function Loader({ onComplete }) {
       </h1>
 
       {/* Progress bar */}
-      <div className="absolute bottom-0 left-0 w-full h-[4px] bg-white/20 overflow-hidden">
+      <div className="absolute bottom-0 left-0 w-full h-[3px] bg-white/20 overflow-hidden">
         <div
           className="h-full bg-white transition-all duration-100 ease-linear"
           style={{ width: `${progress}%` }}
@@ -66,7 +81,7 @@ export default function Loader({ onComplete }) {
       </div>
 
       {/* Percentage */}
-      <div className="absolute bottom-[40px] right-[40px] text-white text-[70px] font-medium tracking-wide">
+      <div className="absolute bottom-[40px] right-[40px] text-white text-[50px] sm:text-[60px] font-medium tracking-wide">
         {progress}%
       </div>
     </div>
