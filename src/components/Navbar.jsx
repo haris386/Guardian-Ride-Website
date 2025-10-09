@@ -13,7 +13,7 @@ export default function Navbar() {
     <nav className="w-full top-0 left-0">
       <div className="w-[95%] mx-auto flex justify-between items-center h-16 px-6 lg:px-12">
         {/* Logo */}
-        <h3 className="font-lexend text-2xl sm:text-3xl font-[500]">LOGO</h3>
+        <h3 id="navbar-logo" className="font-lexend text-2xl sm:text-3xl font-[500]">LOGO</h3>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-8 absolute left-1/2 transform -translate-x-1/2">
