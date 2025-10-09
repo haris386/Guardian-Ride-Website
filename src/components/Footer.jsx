@@ -22,7 +22,7 @@ export default function Footer() {
           <div
             className="absolute h-[1px] bg-white opacity-40"
             style={{
-              top: "17%",
+              top: "23%",
               left: "-73px",
               right: "-73px",
             }}
@@ -32,9 +32,12 @@ export default function Footer() {
           <div className="flex flex-col justify-between space-y-10">
             {/* Row 1: Logo */}
             <div>
-              <h3 className="font-lexend text-2xl sm:text-3xl font-[500]">
-                LOGO
-              </h3>
+              <img
+                src="/logos/gr-logo.png"
+                alt="Guardian Ride Logo"
+                className="sm:h-12 w-auto object-contain"
+                style={{height:"65px"}}
+              />
             </div>
 
             {/* Row 2: Tagline */}
@@ -55,7 +58,7 @@ export default function Footer() {
             </div>
 
             {/* Row 2: Social Links */}
-            <div className="flex flex-col items-start space-y-8 font-outfit font-lexend text-2xl sm:text-3xl font-[500]" >
+            <div className="flex flex-col items-start space-y-8 font-outfit font-lexend text-2xl sm:text-3xl font-[500]">
               <a href="#" className="hover:text-white transition">
                 Facebook
               </a>
@@ -83,9 +86,12 @@ export default function Footer() {
           <div className="flex flex-col justify-between space-y-6">
             {/* Row 1: Logo */}
             <div>
-              <h3 className="font-lexend text-2xl sm:text-3xl font-[500]">
-                LOGO
-              </h3>
+              <img
+                src="/logos/gr-logo.png"
+                alt="Guardian Ride Logo"
+                className="sm:h-12 w-auto object-contain"
+                style={{height:"65px"}}
+              />
             </div>
 
             {/* Row 2: Tagline */}

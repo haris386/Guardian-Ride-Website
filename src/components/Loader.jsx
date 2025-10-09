@@ -9,7 +9,7 @@ export default function Loader({ onComplete }) {
   useEffect(() => {
     const mm = gsap.matchMedia();
 
-    // Progress simulation
+    // Simulate progress
     gsap.to({}, {
       duration: 3,
       onUpdate: function () {
@@ -18,7 +18,7 @@ export default function Loader({ onComplete }) {
       },
     });
 
-    // Timeline for the animation
+    // Main animation timeline
     const tl = gsap.timeline({
       delay: 2.5,
       onComplete: () => {
@@ -31,26 +31,25 @@ export default function Loader({ onComplete }) {
       },
     });
 
-    // Different animations for mobile and desktop
+    // Responsive animations
     mm.add(
       {
-        // Mobile
         isMobile: "(max-width: 768px)",
-        // Desktop
         isDesktop: "(min-width: 769px)",
       },
       (context) => {
         const { isMobile } = context.conditions;
 
+        // Move + shrink the logo
         tl.to(logoRef.current, {
           duration: 1.4,
           x: isMobile ? -136.002 : -636.002,
           y: isMobile ? -612.794 : -312.794,
-          fontSize: "30px",
-          fontWeight: 500,
+          scale: 0.5, // instead of changing fontSize, we scale the image
           ease: "power3.inOut",
         });
 
+        // Fade out logo
         tl.to(logoRef.current, {
           duration: 0.6,
           opacity: 0,
@@ -59,18 +58,18 @@ export default function Loader({ onComplete }) {
       }
     );
 
-    return () => mm.revert(); // Cleanup on unmount
+    return () => mm.revert(); // cleanup
   }, [onComplete]);
 
   return (
     <div className="loader-wrapper fixed inset-0 bg-black/60 backdrop-blur-md z-[9999] flex items-center justify-center">
-      {/* Center logo */}
-      <h1
+      {/* Center logo image */}
+      <img
         ref={logoRef}
-        className="text-white text-[60px] sm:text-[70px] font-bold tracking-wide"
-      >
-        LOGO
-      </h1>
+        src="/logos/gr-logo.png"
+        alt="Guardian Ride Logo"
+        className="w-[160px] sm:w-[200px] object-contain"
+      />
 
       {/* Progress bar */}
       <div className="absolute bottom-0 left-0 w-full h-[3px] bg-white/20 overflow-hidden">
