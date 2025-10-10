@@ -1,61 +1,116 @@
 "use client";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
+import { gsap } from "gsap";
 
 export default function Committed() {
+  const textRefs = useRef([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      textRefs.current.forEach((el) => {
+        gsap.set(el, {
+          backgroundImage: "linear-gradient(90deg, #5A684E 50%, #c3d6b3 50%)",
+          backgroundSize: "200%",
+          backgroundPosition: "100%",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        });
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  const handleMouseEnter = () => {
+    textRefs.current.forEach((el) => {
+      gsap.to(el, {
+        backgroundPosition: "0%",
+        duration: 1.2,
+        ease: "power3.out",
+      });
+    });
+  };
+
+  const handleMouseLeave = () => {
+    textRefs.current.forEach((el) => {
+      gsap.to(el, {
+        backgroundPosition: "100%",
+        duration: 1.2,
+        ease: "power3.inOut",
+      });
+    });
+  };
+
   return (
     <>
-      {/* Desktop Section */}
-      <section className="hidden sm:block w-full mx-auto mt-12 relative rounded-[25px] overflow-hidden px-6 py-16">
-        <div className="max-w-[85%] mx-auto flex flex-col items-start text-left space-y-1">
-          {/* Line 1: Committed + image + To */}
-          <div className="flex items-center flex-wrap gap-4">
-            <h2 className="text-3xl sm:text-5xl md:text-6xl xl:text-[6.8rem] font-[500] leading-tight font-lexend text-[#5A684E]">
-              Committed
-            </h2>
+    <section
+      className="hidden sm:block w-full mx-auto mt-12 relative rounded-[25px] overflow-hidden px-6 py-16"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="max-w-[85%] mx-auto flex flex-col items-start text-left space-y-1">
+        {/* Line 1 */}
+        <div className="flex items-center flex-wrap gap-4">
+          <h2
+            ref={(el) => (textRefs.current[0] = el)}
+            className="text-3xl sm:text-5xl md:text-6xl xl:text-[6.8rem] font-[500] leading-tight font-lexend"
+          >
+            Committed
+          </h2>
+          <Image
+            src="/images/committed.png"
+            alt="Committed"
+            width={220}
+            height={80}
+            className="w-[120px] sm:w-[160px] md:w-[200px] xl:w-[220px] h-auto rounded-[20px]"
+          />
+          <h2
+            ref={(el) => (textRefs.current[1] = el)}
+            className="text-3xl sm:text-5xl md:text-6xl xl:text-[6.8rem] font-[500] leading-tight font-lexend"
+          >
+            To
+          </h2>
+        </div>
+
+        {/* Line 2 */}
+        <div className="flex items-center flex-wrap gap-4">
+          <div className="relative w-[120px] sm:w-[160px] md:w-[200px] xl:w-[220px] h-[150px] rounded-[20px] overflow-hidden">
             <Image
-              src="/images/committed.png"
-              alt="Committed"
-              width={220}
-              height={80}
-              className="w-[120px] sm:w-[160px] md:w-[200px] xl:w-[220px] h-auto rounded-[20px]"
+              src="/images/safer-rides.png"
+              alt="Safer Rides"
+              fill
+              className="object-contain rounded-[20px]"
             />
-            <h2 className="text-3xl sm:text-5xl md:text-6xl xl:text-[6.8rem] font-[500] leading-tight font-lexend text-[#5A684E]">
-              To
-            </h2>
           </div>
+          <h2
+            ref={(el) => (textRefs.current[2] = el)}
+            className="text-3xl sm:text-5xl md:text-6xl xl:text-[6.8rem] font-[500] leading-tight font-lexend"
+          >
+            Safer Rides,
+          </h2>
+        </div>
 
-          {/* Line 2: Safer Rides */}
-          <div className="flex items-center flex-wrap gap-4">
-            <div className="relative w-[120px] sm:w-[160px] md:w-[200px] xl:w-[220px] h-[150px] rounded-[20px] overflow-hidden">
-              <Image
-                src="/images/safer-rides.png"
-                alt="Safer Rides"
-                fill
-                className="object-contain rounded-[20px]"
-              />
-            </div>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl xl:text-[6.8rem] font-[500] leading-tight font-lexend text-[#5A684E]">
-              Safer Rides,
-            </h2>
-          </div>
-
-          {/* Line 3: Clearer Oversight */}
-          <div className="flex items-center flex-wrap gap-4">
-            <h2 className="text-3xl sm:text-5xl md:text-6xl xl:text-[6.8rem] font-[500] leading-tight font-lexend text-[#5A684E]">
-              Clearer Oversight.
-            </h2>
-
-            <div className="relative w-[120px] sm:w-[160px] md:w-[200px] xl:w-[220px] h-[200px] rounded-[20px] overflow-hidden">
-              <Image
-                src="/images/clearer-oversight2.png"
-                alt="Clearer Oversight"
-                fill
-                className="object-contain rounded-[20px]"
-              />
-            </div>
+        {/* Line 3 */}
+        <div className="flex items-center flex-wrap gap-4">
+          <h2
+            ref={(el) => (textRefs.current[3] = el)}
+            className="text-3xl sm:text-5xl md:text-6xl xl:text-[6.8rem] font-[500] leading-tight font-lexend pb-4"
+          >
+            Clearer Oversight.
+          </h2>
+          <div className="relative w-[120px] sm:w-[160px] md:w-[200px] xl:w-[220px] h-[200px] rounded-[20px] overflow-hidden">
+            <Image
+              src="/images/clearer-oversight2.png"
+              alt="Clearer Oversight"
+              fill
+              className="object-contain rounded-[20px]"
+            />
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+
 
       {/* Mobile-only Section */}
       <section className="sm:hidden w-full mx-auto mt-12 relative rounded-[25px] overflow-hidden px-0 py-0">
