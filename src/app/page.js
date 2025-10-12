@@ -2,6 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "@studio-freight/lenis";
+
 import Loader from "@/components/Loader";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -13,6 +15,8 @@ import Committed from "@/components/Committed";
 import ChildsSafety from "@/components/ChildsSafety";
 import Footer from "@/components/Footer";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const cursorRef = useRef(null);
@@ -21,6 +25,33 @@ export default function Home() {
 
   const handleComplete = () => setLoading(false);
 
+  // 🌀 Initialize smooth scrolling with Lenis
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 2.4, // scroll speed (higher = smoother)
+      smooth: true,
+      smoothTouch: true,
+      direction: "vertical",
+      gestureDirection: "vertical",
+      lerp: 0.04, // scroll interpolation
+      wheelMultiplier: 0.8,
+    });
+
+    // GSAP + ScrollTrigger integration
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    lenis.on("scroll", ScrollTrigger.update);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
+  // 🎯 Custom cursor logic
   useEffect(() => {
     const cursor = cursorRef.current;
     const ring = cursorRingRef.current;
@@ -46,7 +77,7 @@ export default function Home() {
     return () => window.removeEventListener("mousemove", moveCursor);
   }, []);
 
-  // Hover animations on buttons & links
+  // ✴️ Hover animations on buttons/links
   useEffect(() => {
     const interactiveEls = document.querySelectorAll("a, button, .hover-target");
     const cursor = cursorRef.current;
@@ -64,7 +95,7 @@ export default function Home() {
     });
   }, []);
 
-  // 👇 Footer 3D Scroll Animation
+  // 🧭 Footer 3D Scroll Animation
   useEffect(() => {
     const footer = footerRef.current;
     if (!footer) return;
