@@ -33,10 +33,10 @@ export default function Footer() {
             {/* Row 1: Logo */}
             <div>
               <img
-                src="/logos/gr-logo.png"
+                src="/logos/Footer.png"
                 alt="Guardian Ride Logo"
                 className="sm:h-12 w-auto object-contain"
-                style={{height:"65px"}}
+                style={{height:"40px"}}
               />
             </div>
 
@@ -87,10 +87,10 @@ export default function Footer() {
             {/* Row 1: Logo */}
             <div>
               <img
-                src="/logos/gr-logo.png"
+                src="/logos/Footer.png"
                 alt="Guardian Ride Logo"
                 className="sm:h-12 w-auto object-contain"
-                style={{height:"65px"}}
+                style={{height:"40px"}}
               />
             </div>
 

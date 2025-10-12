@@ -14,10 +14,10 @@ export default function Navbar() {
         {/* Logo */}
         <div id="navbar-logo" className="flex items-center">
           <img
-            src="/logos/gr-logo.png"
+            src="/logos/Header.png"
             alt="Guardian Ride Logo"
             className="w-auto object-contain"
-            style={{height:"65px"}}
+            style={{height:"35px"}}
           />
         </div>
 

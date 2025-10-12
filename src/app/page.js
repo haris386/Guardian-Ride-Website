@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Loader from "@/components/Loader";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -16,6 +17,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const cursorRef = useRef(null);
   const cursorRingRef = useRef(null);
+  const footerRef = useRef(null);
 
   const handleComplete = () => setLoading(false);
 
@@ -33,13 +35,10 @@ export default function Home() {
     window.addEventListener("mousemove", moveCursor);
 
     const animate = () => {
-      // Smooth floating interpolation
       pos.x += (mouse.x - pos.x) * 0.15;
       pos.y += (mouse.y - pos.y) * 0.15;
-
       gsap.set(cursor, { x: mouse.x, y: mouse.y });
       gsap.set(ring, { x: pos.x - 15, y: pos.y - 15 });
-
       requestAnimationFrame(animate);
     };
     animate();
@@ -47,7 +46,7 @@ export default function Home() {
     return () => window.removeEventListener("mousemove", moveCursor);
   }, []);
 
-  // Hover effect on interactive elements (buttons, links, etc.)
+  // Hover animations on buttons & links
   useEffect(() => {
     const interactiveEls = document.querySelectorAll("a, button, .hover-target");
     const cursor = cursorRef.current;
@@ -65,20 +64,56 @@ export default function Home() {
     });
   }, []);
 
+  // 👇 Footer 3D Scroll Animation
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return;
+
+    gsap.set(footer, {
+      yPercent: 100,
+      rotationX: 45,
+      transformOrigin: "top center",
+      opacity: 0,
+    });
+
+    ScrollTrigger.create({
+      trigger: footer,
+      start: "top bottom-=200",
+      end: "top bottom",
+      onEnter: () => {
+        gsap.to(footer, {
+          yPercent: 0,
+          rotationX: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: "power4.out",
+        });
+      },
+      onLeaveBack: () => {
+        gsap.to(footer, {
+          yPercent: 100,
+          rotationX: 45,
+          opacity: 0,
+          duration: 1,
+          ease: "power4.inOut",
+        });
+      },
+    });
+  }, []);
+
   return (
     <main className="relative bg-[#FFF9ED] min-h-screen overflow-hidden px-6">
       {loading && <Loader onComplete={handleComplete} />}
 
       {/* Floating Framer-Style Cursor */}
-<div
-  ref={cursorRingRef}
-  className="hidden md:block pointer-events-none fixed top-0 left-0 w-12 h-12 rounded-full border border-black/50 z-[9998] transform"
-/>
-<div
-  ref={cursorRef}
-  className="hidden md:block pointer-events-none fixed top-0 left-0 w-2 h-2 rounded-full bg-black/70 z-[9999] transform -translate-x-1/2 -translate-y-1/2"
-/>
-
+      <div
+        ref={cursorRingRef}
+        className="hidden md:block pointer-events-none fixed top-0 left-0 w-12 h-12 rounded-full border border-black/50 z-[9998] transform"
+      />
+      <div
+        ref={cursorRef}
+        className="hidden md:block pointer-events-none fixed top-0 left-0 w-2 h-2 rounded-full bg-black/70 z-[9999] transform -translate-x-1/2 -translate-y-1/2"
+      />
 
       {/* Page content */}
       <div
@@ -96,7 +131,9 @@ export default function Home() {
         <HowItWorks />
         <Committed />
         <ChildsSafety />
-        <Footer />
+        <div ref={footerRef}>
+          <Footer />
+        </div>
       </div>
     </main>
   );

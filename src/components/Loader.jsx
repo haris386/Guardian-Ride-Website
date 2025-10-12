@@ -66,7 +66,7 @@ export default function Loader({ onComplete }) {
       {/* Center logo image */}
       <img
         ref={logoRef}
-        src="/logos/gr-logo.png"
+        src="/logos/Header.png"
         alt="Guardian Ride Logo"
         className="w-[160px] sm:w-[200px] object-contain"
       />
