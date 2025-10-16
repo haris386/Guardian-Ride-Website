@@ -21,37 +21,71 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const cursorRef = useRef(null);
   const cursorRingRef = useRef(null);
+  const pageRef = useRef(null);
   const footerRef = useRef(null);
 
-  const handleComplete = () => setLoading(false);
+  // ✨ When loader completes
+  const handleComplete = () => {
+    setLoading(false);
 
-  // 🌀 Initialize smooth scrolling with Lenis
+    // Step 1: Fade in website
+    gsap.fromTo(
+      pageRef.current,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out",
+        onComplete: () => {
+          // Step 2: Navbar items slide in from right
+          const navItems = document.querySelectorAll("nav ul li");
+          gsap.from(navItems, {
+            x: 100,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.8,
+            ease: "power3.out",
+          });
+
+          // Step 3: Then, sections slide in from left
+          const sections = pageRef.current.querySelectorAll(
+            "section, .slide-in"
+          );
+          gsap.from(sections, {
+            x: -100,
+            opacity: 0,
+            stagger: 0.2,
+            duration: 1.2,
+            ease: "power3.out",
+            delay: 0.4,
+          });
+        },
+      }
+    );
+  };
+
+  // 🌀 Smooth scroll setup
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 2.4, // scroll speed (higher = smoother)
+      duration: 2.4,
       smooth: true,
       smoothTouch: true,
       direction: "vertical",
       gestureDirection: "vertical",
-      lerp: 0.04, // scroll interpolation
+      lerp: 0.04,
       wheelMultiplier: 0.8,
     });
 
-    // GSAP + ScrollTrigger integration
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
-
     lenis.on("scroll", ScrollTrigger.update);
-
-    return () => {
-      lenis.destroy();
-    };
+    return () => lenis.destroy();
   }, []);
 
-  // 🎯 Custom cursor logic
+  // 🧭 Custom cursor logic
   useEffect(() => {
     const cursor = cursorRef.current;
     const ring = cursorRingRef.current;
@@ -77,7 +111,7 @@ export default function Home() {
     return () => window.removeEventListener("mousemove", moveCursor);
   }, []);
 
-  // ✴️ Hover animations on buttons/links
+  // ✴️ Hover animations on interactive elements
   useEffect(() => {
     const interactiveEls = document.querySelectorAll("a, button, .hover-target");
     const cursor = cursorRef.current;
@@ -95,7 +129,7 @@ export default function Home() {
     });
   }, []);
 
-  // 🧭 Footer 3D Scroll Animation
+  // 🧩 Footer scroll animation
   useEffect(() => {
     const footer = footerRef.current;
     if (!footer) return;
@@ -134,9 +168,10 @@ export default function Home() {
 
   return (
     <main className="relative bg-[#FFF9ED] min-h-screen overflow-hidden px-6">
+      {/* Loader */}
       {loading && <Loader onComplete={handleComplete} />}
 
-      {/* Floating Framer-Style Cursor */}
+      {/* Floating Cursor */}
       <div
         ref={cursorRingRef}
         className="hidden md:block pointer-events-none fixed top-0 left-0 w-12 h-12 rounded-full border border-black/50 z-[9998] transform"
@@ -147,13 +182,7 @@ export default function Home() {
       />
 
       {/* Page content */}
-      <div
-        className={`transition-all duration-700 ${
-          loading
-            ? "blur-lg scale-[1.02] opacity-0"
-            : "blur-0 opacity-100 scale-100"
-        }`}
-      >
+      <div ref={pageRef} className="opacity-0 transition-all duration-700">
         <Navbar />
         <HeroSection />
         <CompleteTransportation />

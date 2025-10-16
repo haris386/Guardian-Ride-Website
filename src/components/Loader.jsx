@@ -4,83 +4,92 @@ import { gsap } from "gsap";
 
 export default function Loader({ onComplete }) {
   const [progress, setProgress] = useState(0);
-  const logoRef = useRef(null);
+  const footerRef = useRef(null);
+  const headerRef = useRef(null);
+  const wrapperRef = useRef(null);
+  const progressRef = useRef(null);
 
   useEffect(() => {
-    const mm = gsap.matchMedia();
-
-    // Simulate progress
+    // Simulate loading progress
     gsap.to({}, {
       duration: 3,
       onUpdate: function () {
         const p = Math.floor(this.progress() * 100);
         setProgress(p);
       },
-    });
-
-    // Main animation timeline
-    const tl = gsap.timeline({
-      delay: 2.5,
       onComplete: () => {
-        gsap.to(".loader-wrapper", {
+        // Fade out footer logo
+        gsap.to(footerRef.current, {
           opacity: 0,
-          duration: 1,
+          duration: 0.8,
           ease: "power2.out",
-          onComplete,
         });
-      },
-    });
 
-    // Responsive animations
-    mm.add(
-      {
-        isMobile: "(max-width: 768px)",
-        isDesktop: "(min-width: 769px)",
-      },
-      (context) => {
-        const { isMobile } = context.conditions;
-
-        // Move + shrink the logo
-        tl.to(logoRef.current, {
-          duration: 1.4,
-          x: isMobile ? -136.002 : -636.002,
-          y: isMobile ? -612.794 : -312.794,
-          scale: 0.5, // instead of changing fontSize, we scale the image
+        // Move header logo upward
+        gsap.to(headerRef.current, {
+          y: "-20vh",
+          duration: 1.2,
           ease: "power3.inOut",
         });
 
-        // Fade out logo
-        tl.to(logoRef.current, {
-          duration: 0.6,
+        // Progress text slides slightly up and fades out
+        gsap.to(progressRef.current, {
+          y: -30,
           opacity: 0,
-          ease: "power1.out",
+          duration: 0.6,
+          ease: "power2.inOut",
+          delay: 0.2,
         });
-      }
-    );
 
-    return () => mm.revert(); // cleanup
+        // Slide the whole loader up like a window reveal
+        gsap.to(wrapperRef.current, {
+          y: "-100%",
+          duration: 1.3,
+          delay: 0.6,
+          ease: "power4.inOut",
+          onComplete: onComplete,
+        });
+      },
+    });
   }, [onComplete]);
 
   return (
-    <div className="loader-wrapper fixed inset-0 bg-black/60 backdrop-blur-md z-[9999] flex items-center justify-center">
-      {/* Center logo image */}
+    <div
+      ref={wrapperRef}
+      className="loader-wrapper fixed inset-0 bg-white z-[9999] flex flex-col items-center justify-center overflow-hidden"
+    >
+      {/* Footer background logo (large, gray, faded) */}
       <img
-        ref={logoRef}
-        src="/logos/Footer.png"
-        alt="Guardian Ride Logo"
-        className="w-[160px] sm:w-[200px] object-contain"
+        ref={footerRef}
+        src="logos/Footer.png"
+        alt="Footer Logo"
+        className="absolute w-[75vw] opacity-15 grayscale object-contain z-0"
+        style={{
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          filter: "grayscale(100%) brightness(0.6)",
+        }}
       />
 
-      {/* Progress bar */}
-      <div className="absolute bottom-0 left-0 w-full h-[3px] bg-white/20 overflow-hidden">
-        <div
-          className="h-full bg-white transition-all duration-100 ease-linear"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
+      {/* Header logo */}
+      <img
+        ref={headerRef}
+        src="logos/Header.png"
+        alt="Header Logo"
+        className="w-[200px] sm:w-[260px] object-contain relative z-10"
+      />
 
-      {/* Percentage */}
-      <div className="absolute bottom-[40px] right-[40px] text-white text-[50px] sm:text-[60px] font-medium tracking-wide">
+      {/* Progress text (center-bottom, light gray) */}
+      <div
+        ref={progressRef}
+        className="absolute text-gray-400 text-[50px] sm:text-[70px] font-semibold tracking-wide z-20"
+        style={{
+          bottom: "10%",
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+      >
         {progress}%
       </div>
     </div>
