@@ -48,9 +48,8 @@ export default function Home() {
           });
 
           // Step 3: Then, sections slide in from left
-          const sections = pageRef.current.querySelectorAll(
-            "section, .slide-in"
-          );
+          const sections =
+            pageRef.current.querySelectorAll("section, .slide-in");
           gsap.from(sections, {
             x: -100,
             opacity: 0,
@@ -113,58 +112,36 @@ export default function Home() {
 
   // ✴️ Hover animations on interactive elements
   useEffect(() => {
-    const interactiveEls = document.querySelectorAll("a, button, .hover-target");
+    const interactiveEls = document.querySelectorAll(
+      "a, button, .hover-target"
+    );
     const cursor = cursorRef.current;
     const ring = cursorRingRef.current;
 
     interactiveEls.forEach((el) => {
       el.addEventListener("mouseenter", () => {
-        gsap.to(cursor, { scale: 0.5, backgroundColor: "#FF7F50", duration: 0.3 });
+        gsap.to(cursor, {
+          scale: 0.5,
+          backgroundColor: "#FF7F50",
+          duration: 0.3,
+        });
         gsap.to(ring, { scale: 1.5, borderColor: "#FF7F50", duration: 0.3 });
       });
       el.addEventListener("mouseleave", () => {
-        gsap.to(cursor, { scale: 1, backgroundColor: "rgba(0,0,0,0.7)", duration: 0.3 });
-        gsap.to(ring, { scale: 1, borderColor: "rgba(0,0,0,0.5)", duration: 0.3 });
+        gsap.to(cursor, {
+          scale: 1,
+          backgroundColor: "rgba(0,0,0,0.7)",
+          duration: 0.3,
+        });
+        gsap.to(ring, {
+          scale: 1,
+          borderColor: "rgba(0,0,0,0.5)",
+          duration: 0.3,
+        });
       });
     });
   }, []);
 
-  // 🧩 Footer scroll animation
-  useEffect(() => {
-    const footer = footerRef.current;
-    if (!footer) return;
-
-    gsap.set(footer, {
-      yPercent: 100,
-      rotationX: 45,
-      transformOrigin: "top center",
-      opacity: 0,
-    });
-
-    ScrollTrigger.create({
-      trigger: footer,
-      start: "top bottom-=200",
-      end: "top bottom",
-      onEnter: () => {
-        gsap.to(footer, {
-          yPercent: 0,
-          rotationX: 0,
-          opacity: 1,
-          duration: 1.2,
-          ease: "power4.out",
-        });
-      },
-      onLeaveBack: () => {
-        gsap.to(footer, {
-          yPercent: 100,
-          rotationX: 45,
-          opacity: 0,
-          duration: 1,
-          ease: "power4.inOut",
-        });
-      },
-    });
-  }, []);
 
   return (
     <main className="relative bg-[#FFF9ED] min-h-screen overflow-hidden px-6">
@@ -191,9 +168,8 @@ export default function Home() {
         <HowItWorks />
         <Committed />
         <ChildsSafety />
-        <div ref={footerRef}>
-          <Footer />
-        </div>
+
+        <Footer />  
       </div>
     </main>
   );
