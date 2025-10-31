@@ -13,7 +13,7 @@ export default function CompleteTransportation() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 75%",   // jab section 75% viewport me aaye
+          start: "top 75%",
           end: "bottom 20%",
           toggleActions: "play none none reverse",
         },
@@ -25,22 +25,29 @@ export default function CompleteTransportation() {
         opacity: 0,
         duration: 1,
         ease: "power3.out",
-      })
-        .from(".complete-para", {
+      }).from(
+        ".complete-para",
+        {
           y: 40,
           opacity: 0,
           duration: 0.8,
           ease: "power3.out",
-        }, "-=0.6");
+        },
+        "-=0.6"
+      );
 
       // Cards stagger animation (left-right parallax style)
-      tl.from(".complete-card", {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out",
-        stagger: 0.2,
-      }, "-=0.3");
+      tl.from(
+        ".complete-card",
+        {
+          y: 100,
+          opacity: 0,
+          duration: 1,
+          ease: "power2.out",
+          stagger: 0.2,
+        },
+        "-=0.3"
+      );
     }, sectionRef);
 
     return () => ctx.revert(); // cleanup on unmount
@@ -63,6 +70,9 @@ export default function CompleteTransportation() {
           GuardianRide is more than just a ride—it’s a connected system.
         </p>
       </div>
+        <p className="font-[400] text-[20px] capitalize">
+          GuardianRide’s leaders bring a combined 100-years of experience
+        </p>
 
       {/* Row 2: First set of cards */}
       <div className="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
@@ -75,7 +85,8 @@ export default function CompleteTransportation() {
             Mobile App
           </h3>
           <p className="text-white text-sm">
-            Real-time tracking, live video, and instant messaging—keeping parents connected and assured.
+            Real-time tracking, live video, and instant messaging—keeping
+            parents connected and assured.
           </p>
         </div>
 
@@ -85,7 +96,8 @@ export default function CompleteTransportation() {
             Driver App
           </h3>
           <p className="text-white text-sm">
-            Route lock, safety alerts, and one-tap recording—ensuring safer, controlled trips.
+            Route lock, safety alerts, and one-tap recording—ensuring safer,
+            controlled trips.
           </p>
         </div>
       </div>
@@ -106,7 +118,8 @@ export default function CompleteTransportation() {
             Parent Dashboard
           </h3>
           <p className="text-white text-sm">
-            Trip history, driver details, instant notifications, real-time updates, and full control over your child’s rides.
+            Trip history, driver details, instant notifications, real-time
+            updates, and full control over your child’s rides.
           </p>
         </div>
       </div>
