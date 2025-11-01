@@ -70,16 +70,21 @@ export default function CompleteTransportation() {
           GuardianRide is more than just a ride—it’s a connected system.
         </p>
       </div>
-        <p className="font-[400] text-[20px] capitalize">
-          GuardianRide’s leaders bring a combined 100-years of experience
-        </p>
+      <p className="font-[400] text-[20px] capitalize">
+        GuardianRide’s leaders bring a combined 100-years of experience
+      </p>
 
       {/* Row 2: First set of cards */}
       <div className="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
         {/* Left Card */}
         <div
           className="complete-card relative flex-1 md:flex-[7] rounded-[20px] h-64 bg-cover bg-center flex flex-col justify-end p-6"
-          style={{ backgroundImage: "url(/images/mobile-app.png)" }}
+          style={{
+            backgroundImage: "url(/images/mobile-app.png)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
         >
           <h3 className="text-white font-[500] text-xl mb-2 mt-[50%] md:mt-0">
             Mobile App
@@ -91,7 +96,13 @@ export default function CompleteTransportation() {
         </div>
 
         {/* Right Card */}
-        <div className="complete-card flex-1 md:flex-[3] rounded-[20px] bg-[#BDAB93] p-6 flex flex-col justify-end h-64">
+        <div
+          className="complete-card flex-1 md:flex-[3] rounded-[20px] bg-[#BDAB93] p-6 flex flex-col justify-end h-64"
+          style={{ backgroundImage: "url(/images/driver-app.png)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat", }}
+        >
           <h3 className="text-white font-[500] text-xl mb-2 mt-[50%] md:mt-0">
             Driver App
           </h3>
@@ -104,7 +115,13 @@ export default function CompleteTransportation() {
 
       {/* Row 3: Second set of cards */}
       <div className="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
-        <div className="complete-card flex-1 md:flex-[3] rounded-[20px] bg-[#BDAB93] p-6 flex flex-col justify-end h-64">
+        <div
+          className="complete-card flex-1 md:flex-[3] rounded-[20px] bg-[#BDAB93] p-6 flex flex-col justify-end h-64"
+          style={{ backgroundImage: "url(/images/school-dashboard.png)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat", }}
+        >
           <h3 className="text-white font-[500] text-xl mb-2 mt-[50%] md:mt-0">
             School Dashboard
           </h3>
@@ -113,7 +130,13 @@ export default function CompleteTransportation() {
           </p>
         </div>
 
-        <div className="complete-card relative flex-1 md:flex-[7] rounded-[20px] bg-[#5A684E] flex flex-col justify-end p-6 h-64">
+        <div
+          className="complete-card relative flex-1 md:flex-[7] rounded-[20px] bg-[#5A684E] flex flex-col justify-end p-6 h-64"
+          style={{ backgroundImage: "url(/images/parent-dashboard.png)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat", }}
+        >
           <h3 className="text-white font-[500] text-xl mb-2 mt-[50%] md:mt-0">
             Parent Dashboard
           </h3>
