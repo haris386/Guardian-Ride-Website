@@ -63,27 +63,6 @@ export default function Home() {
     );
   };
 
-  // 🌀 Smooth scroll setup
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 2.4,
-      smooth: true,
-      smoothTouch: true,
-      direction: "vertical",
-      gestureDirection: "vertical",
-      lerp: 0.04,
-      wheelMultiplier: 0.8,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-    lenis.on("scroll", ScrollTrigger.update);
-    return () => lenis.destroy();
-  }, []);
-
   // 🧭 Custom cursor logic
   useEffect(() => {
     const cursor = cursorRef.current;
